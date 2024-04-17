@@ -1,0 +1,73 @@
+
+############# Next Permutation ##########
+
+Next Permutation means if elements stored as in dictionary what would be next combination
+[3,2,1] -> [1,2,3] , [1 3 2]  , [2 1 3]  , [2 3 1 ] , [3 1 2]  [3,2 1]
+therefore next permuation will be [1  2  3]
+
+Brute Force
+1. Find all permutations
+2. Do a linear Search 
+3. Return next
+ 
+
+C++ stl has next_permtations(arr,arr+x) ->  method has (bidirectional_Iterator first, bidirectional_iterator  last)
+[1,2,3] -> next_permutation(arr,arr+3)
+
+
+[2,1,5,4,3,0,0]   Keep finding a smaller element
+[2,1,5,4,3,0]       a[i]<a[i+1]
+[2,1,5,4,3]
+[2,1,5,4]
+[2,1,5] 
+[2,1]     Towards its right find a elment bigger than current but smallest and place it next to 2 and program is completed.
+
+
+
+function nextPerm(nums){
+    let n= nums.length
+    let ind=-1
+    for(let i=n-2;i>=0;i--)
+    {
+        if(nums[i]<nums[i+1])  //stuck for one hour
+        {
+            ind=i
+            break
+        }
+    }
+
+    if(ind===-1){
+     nums.reverse();
+     return
+    }
+
+
+    //find next greater from right -> cause of strictly inc     
+    // [5 4 3 0 0]
+
+    let j=n-1
+    while(nums[j] <= nums[ind])j--
+
+    //swap
+    [nums[j],nums[ind]]=[nums[ind],nums[j]]
+
+    //reverse elements right to ind till end
+
+//   let subarray = nums.slice(ind + 1);
+// subarray.sort((a, b) => a - b);
+// for (let i = ind + 1; i < n; i++) {
+//     nums[i] = subarray[i - ind - 1];
+
+
+    let left =ind+1,right=n-1
+    while(left<right)
+    {
+        [nums[left],nums[right]]=[nums[right],nums[left]]
+        left++
+        right--
+    }    
+    
+}
+}
+
+
